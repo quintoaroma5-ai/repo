@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Café Andino — Origen, Historia y Cultura</title>
+  <meta name="description" content="Promovemos el café andino de nuestra localidad: su origen, historia, proceso y valor cultural. No vendemos: conectamos, inspiramos y difundimos." />
+  <meta property="og:title" content="Café Andino — Origen, Historia y Cultura" />
+  <meta property="og:description" content="Descubre el café andino: su origen, proceso y legado cultural." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0f3d2e" />
+  <link rel="icon" href="favicon.ico" />
+
+  <!-- TailwindCSS CDN (para prototipado rápido). En producción, compila Tailwind localmente. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            jungle: {
+              900: '#0f3d2e', // verde selva profundo
+              700: '#165a44',
+              500: '#1f7a57',
+              300: '#5fb38a'
+            },
+            coffee: {
+              900: '#3b2211', // marrón café
+              700: '#5a3419',
+              500: '#7a4a27',
+              300: '#b07d53'
+            },
+            sand: {
+              100: '#f5efe6', // beige cálido
+              200: '#ebdfcf'
+            },
+            gold: {
+              500: '#caa24b'
+            }
+          },
+          fontFamily: {
+            display: ['Poppins', 'ui-sans-serif', 'system-ui'],
+            body: ['Inter', 'ui-sans-serif', 'system-ui']
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgb(0 0 0 / 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <!-- AOS (animaciones on-scroll) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script defer src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <!-- GSAP para microinteracciones y parallax -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- VanillaTilt para efecto 3D sutil en tarjetas -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <style>
+    /* Gradientes y decoraciones suaves */
+    .hero-bg{background: radial-gradient(1200px 600px at 70% 20%, rgba(202,162,75,.12), transparent 60%),
+                         radial-gradient(1000px 500px at 0% 100%, rgba(31,122,87,.18), transparent 60%),
+                         linear-gradient(180deg, #0f3d2e 0%, #3b2211 100%);}    
+    .grain{position:fixed;inset:0;pointer-events:none;opacity:.06;mix-blend:overlay;background-image:url('https://uploads-ssl.webflow.com/5fca8f6f9f5f1a3c0d3e0e9a/5fcb0f2a0f9c760d1a4bb0c5_grain.png');}
+    .gold-underline{box-shadow: inset 0 -0.5em 0 rgba(202,162,75,.18);} 
+    .parallax{transform:translateZ(0);}  
+    .btn{transition:transform .2s ease, box-shadow .2s ease;}
+    .btn:hover{transform:translateY(-2px); box-shadow:0 10px 20px rgba(0,0,0,.15)}
+    /* Simple "vapor" animado para la taza */
+    @keyframes steam{0%{opacity:.2; transform:translateY(0)} 50%{opacity:.5; transform:translateY(-8px)} 100%{opacity:.2; transform:translateY(0)}}
+  </style>
+</head>
+<body class="bg-sand-100 text-coffee-900 font-body antialiased">
+  <div class="grain"></div>
+
+  <!-- Navbar -->
+  <header class="fixed z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-white/50 bg-white/40 border-b border-white/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#home" class="flex items-center gap-3">
+          <span class="inline-block w-9 h-9 rounded-xl bg-jungle-700/20 grid place-items-center shadow-soft">
+            <!-- Ícono grano de café -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5 text-coffee-700"><path fill="currentColor" d="M12 2C7 2 2 7 2 12s5 10 10 10 10-5 10-10S17 2 12 2m-.5 17.5c-3.6-.2-6.5-3.2-6.5-6.9s2.9-6.7 6.5-6.9c-.8 1.4-1.5 3.4-1.5 5.3c0 3.2.9 6.3 1.5 8.5m2-.2c.6-2.2 1.5-5.3 1.5-8.3c0-2-.7-4-1.5-5.5c3.7.1 6.7 3.1 6.7 6.9s-3 6.8-6.7 6.9"/></svg>
+          </span>
+          <span class="font-display font-bold text-lg tracking-wide">Café Andino</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 font-medium">
+          <a href="#historia" class="hover:text-jungle-700">Historia</a>
+          <a href="#proceso" class="hover:text-jungle-700">Proceso</a>
+          <a href="#galeria" class="hover:text-jungle-700">Galería</a>
+          <a href="#mision" class="hover:text-jungle-700">Misión</a>
+          <a href="#redes" class="hover:text-jungle-700">Redes</a>
+          <a href="#contacto" class="hover:text-jungle-700">Contacto</a>
+        </nav>
+        <a href="#contacto" class="btn inline-flex items-center gap-2 rounded-2xl bg-jungle-700 px-4 py-2 text-white shadow-soft">
+          <span>Conectar</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-4 h-4"><path fill="currentColor" d="m12 3l8 8h-6v8H10v-8H4z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero-bg relative pt-28 md:pt-36 pb-24 text-white overflow-hidden">
+    <div class="absolute -left-40 -top-40 w-[32rem] h-[32rem] rounded-full bg-jungle-300/20 blur-3xl"></div>
+    <div class="absolute -right-40 -bottom-40 w-[32rem] h-[32rem] rounded-full bg-gold-500/10 blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+      <div data-aos="fade-right" class="parallax">
+        <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight gold-underline">
+          Café Andino: aroma, origen y cultura
+        </h1>
+        <p class="mt-5 text-sand-200 text-lg max-w-xl">
+          Promovemos el café de nuestra localidad para que más personas conozcan su esencia andina. No vendemos: contamos su
+          historia, compartimos su proceso y celebramos a las familias que lo cultivan.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#historia" class="btn rounded-2xl bg-gold-500 text-coffee-900 px-5 py-3 font-semibold">Descubrir historia</a>
+          <a href="#galeria" class="btn rounded-2xl bg-white/10 px-5 py-3">Ver fotos y videos</a>
+        </div>
+
+        <!-- Badges -->
+        <div class="mt-8 flex items-center gap-6 opacity-90">
+          <div class="flex items-center gap-2"><span class="w-2 h-2 bg-gold-500 rounded-full"></span><span>Altura & terroir únicos</span></div>
+          <div class="flex items-center gap-2"><span class="w-2 h-2 bg-gold-500 rounded-full"></span><span>Pequeños productores</span></div>
+        </div>
+      </div>
+
+      <!-- Hero visual con taza y vapor animado + tarjeta 3D -->
+      <div class="relative" data-aos="fade-left">
+        <div class="relative aspect-square max-w-md mx-auto rounded-3xl bg-white/10 backdrop-blur border border-white/20 shadow-soft p-8" data-tilt data-tilt-max="10" data-tilt-speed="600">
+          <div class="absolute -inset-0.5 rounded-3xl bg-gradient-to-br from-gold-500/10 to-jungle-500/10 -z-10"></div>
+          <div class="w-full h-full grid place-items-center">
+            <!-- Taza SVG -->
+            <svg class="w-48 h-48" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="cup" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+                  <stop offset="100%" stop-color="#ebdfcf" stop-opacity="1"/>
+                </linearGradient>
+              </defs>
+              <g>
+                <ellipse cx="90" cy="70" rx="55" ry="18" fill="#d8cbb7"/>
+                <rect x="35" y="70" width="110" height="55" rx="18" fill="url(#cup)" stroke="#cdbba1"/>
+                <ellipse cx="90" cy="125" rx="55" ry="18" fill="#cdbba1"/>
+                <path d="M145 78c18 0 30 10 30 24s-12 24-30 24" fill="none" stroke="#cdbba1" stroke-width="8"/>
+                <!-- Café -->
+                <ellipse cx="90" cy="70" rx="45" ry="12" fill="#7a4a27"/>
+              </g>
+            </svg>
+            <!-- Vapor -->
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 flex gap-2">
+              <span class="w-1 h-8 bg-white/70 rounded-full animate-[steam_3s_ease-in-out_infinite]"></span>
+              <span class="w-1 h-10 bg-white/60 rounded-full animate-[steam_2.6s_ease-in-out_infinite_.2s]"></span>
+              <span class="w-1 h-7 bg-white/60 rounded-full animate-[steam_3.4s_ease-in-out_infinite_.4s]"></span>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-sand-200 mt-4">Una experiencia inmersiva del café andino</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section id="historia" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div data-aos="fade-up">
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-jungle-900">Historia del Café Andino</h2>
+          <p class="mt-4 text-coffee-700">Desde las laderas de los Andes hasta tu taza: una travesía marcada por altura, microclimas y tradición comunitaria. Nuestra misión es preservar y compartir este legado.</p>
+          <div class="mt-6 space-y-6">
+            <!-- Timeline items -->
+            <div class="relative pl-8" data-aos="fade-right" data-aos-delay="50">
+              <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-gold-500"></span>
+              <h3 class="font-semibold">Orígenes</h3>
+              <p class="text-coffee-700">Primeras familias caficultoras en la zona andina, adoptando técnicas sostenibles.</p>
+            </div>
+            <div class="relative pl-8" data-aos="fade-right" data-aos-delay="100">
+              <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-gold-500"></span>
+              <h3 class="font-semibold">Crecimiento comunitario</h3>
+              <p class="text-coffee-700">Cooperación y asociatividad para mejorar la calidad y el reconocimiento del café.</p>
+            </div>
+            <div class="relative pl-8" data-aos="fade-right" data-aos-delay="150">
+              <span class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-gold-500"></span>
+              <h3 class="font-semibold">Proyección cultural</h3>
+              <p class="text-coffee-700">Ferias, rutas del café y turismo vivencial para difundir el valor cultural.</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:pl-8" data-aos="zoom-in">
+          <div class="rounded-3xl overflow-hidden shadow-soft">
+            <img src="https://images.unsplash.com/photo-1509043759401-136742328bb3?q=80&w=1400&auto=format&fit=crop" alt="Plantaciones de café en los Andes" class="w-full h-[420px] object-cover"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section id="proceso" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-jungle-900">Proceso de cultivo y producción</h2>
+        <p class="mt-3 text-coffee-700">Del grano a la taza mediante prácticas responsables y control de calidad en cada etapa.</p>
+      </div>
+
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Paso card -->
+        <div class="group rounded-3xl bg-sand-200 p-6 shadow-soft" data-tilt data-tilt-max="8" data-tilt-speed="500" data-aos="fade-up">
+          <div class="w-12 h-12 rounded-2xl bg-jungle-700/20 grid place-items-center">
+            <span class="text-jungle-900 font-bold">1</span>
+          </div>
+          <h3 class="mt-4 font-semibold">Siembra & Sombra</h3>
+          <p class="text-coffee-700">Viveros, selección de variedades y cultivo bajo sombra nativa para proteger la biodiversidad.</p>
+        </div>
+
+        <div class="group rounded-3xl bg-sand-200 p-6 shadow-soft" data-tilt data-tilt-max="8" data-tilt-speed="500" data-aos="fade-up" data-aos-delay="50">
+          <div class="w-12 h-12 rounded-2xl bg-jungle-700/20 grid place-items-center">
+            <span class="text-jungle-900 font-bold">2</span>
+          </div>
+          <h3 class="mt-4 font-semibold">Cosecha Selectiva</h3>
+          <p class="text-coffee-700">Recolección a mano del grano maduro para asegurar dulzor y uniformidad.</p>
+        </div>
+
+        <div class="group rounded-3xl bg-sand-200 p-6 shadow-soft" data-tilt data-tilt-max="8" data-tilt-speed="500" data-aos="fade-up" data-aos-delay="100">
+          <div class="w-12 h-12 rounded-2xl bg-jungle-700/20 grid place-items-center">
+            <span class="text-jungle-900 font-bold">3</span>
+          </div>
+          <h3 class="mt-4 font-semibold">Beneficiado</h3>
+          <p class="text-coffee-700">Despulpado, fermentación controlada y secado al sol con monitoreo constante.</p>
+        </div>
+
+        <div class="group rounded-3xl bg-sand-200 p-6 shadow-soft" data-tilt data-tilt-max="8" data-tilt-speed="500" data-aos="fade-up" data-aos-delay="150">
+          <div class="w-12 h-12 rounded-2xl bg-jungle-700/20 grid place-items-center">
+            <span class="text-jungle-900 font-bold">4</span>
+          </div>
+          <h3 class="mt-4 font-semibold">Tostado & Cata</h3>
+          <p class="text-coffee-700">Perfiles de tostión y catación para resaltar notas florales, frutales y achocolatadas.</p>
+        </div>
+      </div>
+
+      <!-- Gráfico simple (placeholders) -->
+      <div class="mt-12 rounded-3xl bg-sand-200 p-6">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="font-semibold">Indicadores de calidad (demo)</h4>
+          <span class="text-sm text-coffee-700">Altitud, humedad, puntaje SCA</span>
+        </div>
+        <div class="w-full h-40 bg-white/70 rounded-2xl grid place-items-center text-coffee-700">(Aquí puedes incrustar un gráfico real o animación)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section id="galeria" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-jungle-900">Galería de fotos y videos</h2>
+        <p class="mt-3 text-coffee-700">Imágenes y clips que retratan la vida cafetera andina.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-3 gap-6">
+        <div class="overflow-hidden rounded-3xl shadow-soft" data-aos="zoom-in"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200&auto=format&fit=crop" alt="Granos de café"/></div>
+        <div class="overflow-hidden rounded-3xl shadow-soft" data-aos="zoom-in" data-aos-delay="100"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1200&auto=format&fit=crop" alt="Tostado"/></div>
+        <div class="overflow-hidden rounded-3xl shadow-soft" data-aos="zoom-in" data-aos-delay="200"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1461988625982-7e46a099bf4f?q=80&w=1200&auto=format&fit=crop" alt="Finca andina"/></div>
+      </div>
+
+      <!-- Videos: reemplaza los src por tus enlaces -->
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <div class="aspect-video overflow-hidden rounded-3xl shadow-soft" data-aos="fade-up">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/2JgG0lS9QJ4" title="Video del café andino" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="aspect-video overflow-hidden rounded-3xl shadow-soft" data-aos="fade-up" data-aos-delay="100">
+          <iframe class="w-full h-full" src="https://www.youtube.com/embed/4bP8w3gL4sA" title="Proceso del café" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISIÓN -->
+  <section id="mision" class="py-20 bg-sand-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+      <div data-aos="fade-right">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-jungle-900">Nuestra misión</h2>
+        <p class="mt-4 text-coffee-700">Difundir el café andino como patrimonio vivo. Impulsamos el turismo responsable, las rutas del café y el reconocimiento del trabajo de las familias productoras. Conectamos a las personas con el origen, sin intermediación comercial.</p>
+        <ul class="mt-6 space-y-3 text-coffee-800">
+          <li class="flex gap-2"><span class="w-2 h-2 rounded-full bg-jungle-500 mt-2"></span> Educación y cultura cafetera</li>
+          <li class="flex gap-2"><span class="w-2 h-2 rounded-full bg-jungle-500 mt-2"></span> Sostenibilidad y respeto por la tierra</li>
+          <li class="flex gap-2"><span class="w-2 h-2 rounded-full bg-jungle-500 mt-2"></span> Orgullo local y comunidad</li>
+        </ul>
+      </div>
+      <div class="md:pl-8" data-aos="fade-left">
+        <div class="rounded-3xl p-8 bg-white shadow-soft">
+          <h3 class="font-semibold text-jungle-900">Call to Action</h3>
+          <p class="mt-2 text-coffee-700">¿Quieres conocer más o visitar una finca?</p>
+          <a href="#contacto" class="btn mt-4 inline-flex items-center gap-2 rounded-2xl bg-jungle-700 px-5 py-3 text-white">Escríbenos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REDES SOCIALES -->
+  <section id="redes" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-jungle-900">Síguenos en redes</h2>
+        <p class="mt-3 text-coffee-700">Conecta con nuestras últimas historias, recorridos y catas.</p>
+      </div>
+
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Reemplaza los href con tus enlaces -->
+        <a href="https://www.facebook.com/share/14H5XKwYBmM/" target="_blank" class="group rounded-3xl bg-white p-6 shadow-soft flex items-center gap-4 hover:-translate-y-1 transition">
+          <img alt="Facebook" class="w-10 h-10" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg"/>
+          <div>
+            <h3 class="font-semibold">Facebook</h3>
+            <p class="text-sm text-coffee-700">Noticias y eventos</p>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/quinto_aroma5?igsh=emNoMWF4MXl3MDZu" target="_blank" class="group rounded-3xl bg-white p-6 shadow-soft flex items-center gap-4 hover:-translate-y-1 transition">
+          <img alt="Instagram" class="w-10 h-10" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg"/>
+          <div>
+            <h3 class="font-semibold">Instagram</h3>
+            <p class="text-sm text-coffee-700">Fotos del día a día</p>
+          </div>
+        </a>
+        <a href="https://www.tiktok.com/@quintoaroma3?_t=ZS-8zSShbL1GMM&_r=1" target="_blank" class="group rounded-3xl bg-white p-6 shadow-soft flex items-center gap-4 hover:-translate-y-1 transition">
+          <img alt="TikTok" class="w-10 h-10" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg"/>
+          <div>
+            <h3 class="font-semibold">TikTok</h3>
+            <p class="text-sm text-coffee-700">Clips breves</p>
+          </div>
+        </a>
+        <a href="https://youtube.com/@quintoaroma-v7s?si=9nuDRl2s2sp8rnld" target="_blank" class="group rounded-3xl bg-white p-6 shadow-soft flex items-center gap-4 hover:-translate-y-1 transition">
+          <img alt="YouTube" class="w-10 h-10" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg"/>
+          <div>
+            <h3 class="font-semibold">YouTube</h3>
+            <p class="text-sm text-coffee-700">Documentales y catas</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
+      <div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-jungle-900">Contacto</h2>
+        <p class="mt-3 text-coffee-700">Escríbenos para visitas, prensa o colaboraciones culturales. No realizamos ventas.</p>
+        <form onsubmit="event.preventDefault(); alert('¡Gracias! Te contactaremos pronto.');" class="mt-6 space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Nombre</label>
+            <input type="text" required class="w-full rounded-2xl border border-coffee-500/20 bg-sand-100 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-jungle-500" placeholder="Tu nombre" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Email</label>
+            <input type="email" required class="w-full rounded-2xl border border-coffee-500/20 bg-sand-100 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-jungle-500" placeholder="tu@email.com" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Mensaje</label>
+            <textarea required rows="4" class="w-full rounded-2xl border border-coffee-500/20 bg-sand-100 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-jungle-500" placeholder="Cuéntanos tu idea"></textarea>
+          </div>
+          <button class="btn rounded-2xl bg-jungle-700 px-6 py-3 text-white">Enviar</button>
+        </form>
+      </div>
+      <div class="rounded-3xl overflow-hidden shadow-soft" data-aos="zoom-in">
+        <!-- Reemplaza q= con tu ubicación exacta -->
+        <iframe class="w-full h-[400px]" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387144.0075830616!2d-74.25986568729162!3d40.69714942282025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2shttps://maps.app.goo.gl/7nDTnPArLytRW5xY6!5e0!3m2!1ses!2s!4v1694020000000!5m2!1ses!2s" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-10 bg-jungle-900 text-sand-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-sm">© <span id="year"></span> Café Andino — Promoción cultural del café. Sin ventas.</p>
+      <div class="flex items-center gap-4 text-sm opacity-90">
+        <a href="#historia" class="hover:opacity-100">Historia</a>
+        <a href="#proceso" class="hover:opacity-100">Proceso</a>
+        <a href="#galeria" class="hover:opacity-100">Galería</a>
+        <a href="#contacto" class="hover:opacity-100">Contacto</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts de interacción -->
+  <script>
+    // Init AOS
+    document.addEventListener('DOMContentLoaded', () => {
+      AOS.init({ duration: 900, once: true, offset: 80 });
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+
+    // GSAP Parallax sutil en HERO
+    window.addEventListener('load', () => {
+      if (window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to('.parallax', {
+          yPercent: -8,
+          ease: 'none',
+          scrollTrigger: { trigger: '#home', start: 'top top', end: 'bottom top', scrub: true }
+        });
+      }
+    });
+
+    // VanillaTilt en tarjetas
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.VanillaTilt) {
+        VanillaTilt.init(document.querySelectorAll('[data-tilt]'));
+      }
+    });
+  </script>
+</body>
+</html>
